@@ -1,0 +1,38 @@
+{
+    "name": "A320 Displayer",
+    "version": "1.0.2",
+    "description": "Ecrans partagés entre les différents modules du cockpit",
+    "keywords": "a320, cockpit",
+    "repository":
+    {
+      "type": "git",
+      "url": "https://github.com/rguilbeau/A320_Displayer"
+    },
+    "authors":
+    [
+      {
+        "name": "Romain Guilbeau",
+        "email": "guilbeau.r@gmail.com",
+        "url": "",
+        "maintainer": true
+      }
+    ],
+    "license": "MIT",
+    "homepage": "",
+    "dependencies": {
+        "adafruit/Adafruit SSD1306" : "https://github.com/rguilbeau/Adafruit_SSD1306#1.0.1",        
+        "adafruit/Adafruit GFX Library" : "1.11.5",
+        "adafruit/Adafruit BusIO" : "1.14.1"
+    },
+    "frameworks": "arduino",
+    "platforms": "*",
+    "export": {
+        "include": [
+            "*.h",
+            "*/*.h",
+            "*/*/*.h"
+        ]
+    }
+  }
+
+  
