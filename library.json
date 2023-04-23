@@ -1,6 +1,6 @@
 {
     "name": "A320 Displayer",
-    "version": "1.0.2",
+    "version": "1.0.0",
     "description": "Ecrans partagés entre les différents modules du cockpit",
     "keywords": "a320, cockpit",
     "repository":
