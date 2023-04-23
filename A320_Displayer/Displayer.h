@@ -3,8 +3,8 @@
 
 #include "Arduino.h"
 #include <Adafruit_SSD1306.h>
-#include "core/displayer/fonts/Nimbus_Sans_L_Bold_16.h"
-#include "core/displayer/fonts/DSEG7_Classic_Mini_Bold_25.h"
+#include "A320_Displayer/fonts/Nimbus_Sans_L_Bold_16.h"
+#include "A320_Displayer/fonts/DSEG7_Classic_Mini_Bold_25.h"
 
 class Displayer
 {
