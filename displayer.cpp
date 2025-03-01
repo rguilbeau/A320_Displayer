@@ -68,15 +68,7 @@ void Displayer::setContrast(const uint8_t &nValue)
     if(m_nContrast != nValue)
     {
         m_nContrast = nValue;
-
-        if(m_nContrast == 0)
-        {
-            setPowerOn(false);
-        }
-        else
-        {
-            setPowerOn(true);
-        }
+        m_bInternalMutation = true;
     }
 }
 
@@ -120,7 +112,7 @@ void Displayer::loop()
 {
     unsigned long nCurrentMillis = millis();
 
-    if(nCurrentMillis - m_nLastUpdate >= 70) // 70
+    if(nCurrentMillis - m_nLastUpdate >= 70)
     {
         if(checkMutation() || m_bInternalMutation)
         {
@@ -140,12 +132,12 @@ void Displayer::loop()
                 {
                     display();
                 }
+            }
 
-                if(m_nLastContrast != m_nContrast)
-                {
-                    m_nLastContrast = m_nContrast;
-                    m_pScreen->setContrast(m_nContrast);
-                }
+            if(m_nLastContrast != m_nContrast)
+            {
+                m_nLastContrast = m_nContrast;
+                m_pScreen->setContrast(m_nContrast);
             }
 
             m_pScreen->display();
