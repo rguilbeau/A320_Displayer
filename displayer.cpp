@@ -47,13 +47,6 @@ void Displayer::begin(const uint8_t &nAddress)
     m_pScreen->display();    
 }
 
-void Displayer::displayNone()
-{
-    selectScreen();
-    m_pScreen->clearDisplay();
-    m_pScreen->display(); 
-}
-
 /**
  * @brief Ajoute les "leading zero"
  * 
@@ -70,15 +63,39 @@ String Displayer::leftPad(const int &nValue, const int &nSize)
     return String(buff);
 }
 
-/**
- * @brief Changement de contraste (rétroéclairage) de l'écran
- * 
- * @param value 
- */
 void Displayer::setContrast(const uint8_t &nValue)
 {
-    selectScreen();
-    m_pScreen->setContrast(nValue);
+    if(m_nContrast != nValue)
+    {
+        m_nContrast = nValue;
+
+        if(m_nContrast == 0)
+        {
+            setPowerOn(false);
+        }
+        else
+        {
+            setPowerOn(true);
+        }
+    }
+}
+
+void Displayer::setPowerOn(const bool &bPowerOn)
+{
+    if(m_bPowerOn != bPowerOn)
+    {
+        m_bPowerOn = bPowerOn;
+        m_bInternalMutation = true;
+    }
+}
+
+void Displayer::setTestLight(const bool &bTestLight)
+{
+    if(m_bTestLight != bTestLight)
+    {
+        m_bTestLight = bTestLight;
+        m_bInternalMutation = true;
+    }
 }
 
 /**
@@ -93,5 +110,47 @@ void Displayer::selectScreen()
         Wire.write(1 << m_nIndexDisplay);
         Wire.endTransmission();
         Displayer::m_nSelectedScreen = m_nIndexDisplay;
+    }
+}
+
+/**
+ * @brief Raffraichi l'écran
+ */
+void Displayer::loop()
+{
+    unsigned long nCurrentMillis = millis();
+
+    if(nCurrentMillis - m_nLastUpdate >= 70) // 70
+    {
+        if(checkMutation() || m_bInternalMutation)
+        {
+            m_bInternalMutation = false;
+
+            selectScreen();
+            
+            m_pScreen->clearDisplay();
+
+            if(m_bPowerOn)
+            {
+                if(m_bTestLight)
+                {
+                    displayTestLight();
+                }
+                else
+                {
+                    display();
+                }
+
+                if(m_nLastContrast != m_nContrast)
+                {
+                    m_nLastContrast = m_nContrast;
+                    m_pScreen->setContrast(m_nContrast);
+                }
+            }
+
+            m_pScreen->display();
+
+            m_nLastUpdate = nCurrentMillis;
+        }
     }
 }
